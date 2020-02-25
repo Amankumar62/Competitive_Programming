@@ -50,7 +50,7 @@ public class QueueUsingArray {
 	public void display(){
 		for(int i = 0 ; i<this.data.length;i++){
 			int j = (this.front+i)%this.data.length;
-		System.out.print(this.data[j]);
+		System.out.print(this.data[j]+"=>");
 		}
 		System.out.println("END");
 	}
