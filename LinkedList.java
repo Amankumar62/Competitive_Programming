@@ -8,6 +8,12 @@ public class LinkedList {
 	private Node tail;
 	private int size;
 	
+	public int size(){
+		return this.size;
+	}
+	public boolean isEmpty(){
+		return this.size <=0;
+	}
 	public void display(){
 		Node temp = this.head;;
 		while(temp!=null){
