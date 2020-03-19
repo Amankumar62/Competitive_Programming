@@ -50,7 +50,7 @@ public class LinkedList {
 			nn.next = this.head;
 		}
 		
-		//updtaing summary object
+		//updating summary object
 		if(this.size ==0){
 			this.head = nn;
 			this.tail= nn;
