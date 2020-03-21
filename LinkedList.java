@@ -1,5 +1,5 @@
 
-public class LinkedList {
+public class  LinkedList {
 	private class Node{
 	 int data;
 	 Node next;
