@@ -208,4 +208,15 @@ public class LinkedListGenerics<T> {
 			}
 			return slow.data;
 		}
+	public int find(T data){
+		int index =0;
+		for(Node temp = this.head;temp != null;temp = temp.next){
+			if(temp.data.equals(data)){
+				return index;
+			}
+			index++;
+		}
+		return -1;
+	}	
+		
 }
