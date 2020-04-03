@@ -11,7 +11,7 @@ public class HeapGenerics<T extends Comparable<T>> {
 	
 	private void heapify(int ci){
 		int pi = (ci-1)/2;
-		if(heap.get(ci) < heap.get(pi) ){
+		if(isLarger(heap.get(ci) , heap.get(pi)) >0 ){
 			swap(ci,pi);
 			heapify(pi);
 		}
@@ -30,11 +30,11 @@ public class HeapGenerics<T extends Comparable<T>> {
 		int rci = 2*pi +2;
 		
 		int mini = pi;
-		if(lci < this.heap.size() && this.heap.get(lci) < this.heap.get(mini)){
+		if(lci < this.heap.size() && (isLarger(heap.get(lci),heap.get(pi)) > 0 )){
 			mini = lci;
 			}
 		
-		if(rci < this.heap.size() && this.heap.get(rci) < this.heap.get(mini)){
+		if(rci < this.heap.size() && (isLarger(heap.get(rci),heap.get(pi) ) > 0 ) ){
 			mini = rci;
 		}
 		
@@ -64,6 +64,9 @@ public class HeapGenerics<T extends Comparable<T>> {
 	}
 	public void display(){
 		System.out.println(heap);
+	}
+	public int isLarger(T t , T o){
+		return t.compareTo(o);
 	}
 	
 }
