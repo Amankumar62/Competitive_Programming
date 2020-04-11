@@ -22,8 +22,13 @@ public class GraphClient {
 		graph.addEdge("E", "G", 1);
 		
 		graph.display();
-
-		graph.bft();
+		graph.removeEdge("D", "E");
+		System.out.println(graph.getCC());
+//		graph.bft();
+//		graph.dft();
+//		);
+		
+		
 	}
 
 }
