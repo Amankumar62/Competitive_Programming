@@ -355,7 +355,114 @@ public class Graph {
 		}
 		return ans;
 	}
+	private class PrimsPair implements Comparable<PrimsPair>{
+		String vname;
+		String acqvname;
+		int cost;
+		@Override
+		public int compareTo(PrimsPair o) {
+			return o.cost - this.cost;
+		}
+	}
+	public Graph prims(){
+		Graph mst = new Graph();
+		HashMap<String,PrimsPair> map = new HashMap<>();
+		HeapGenerics<PrimsPair> heap = new HeapGenerics<>();
+		//make a pair and add in heap
+		for(String key : vtces.keySet()){
+			PrimsPair np = new PrimsPair();
+			np.vname = key;
+			np.acqvname= null;
+			np.cost = Integer.MAX_VALUE;
+			heap.add(np);
+			map.put(key, np);
+		}
+		//till the heap is not empty keep on removing the pairs
+		while(!heap.isEmpty()){
+			//remove a pair
+			PrimsPair rp = heap.remove();
+			map.remove(rp.vname);
+			
+			//add to mst
+			if(rp.acqvname == null){
+				mst.addVertex(rp.vname);
+			}else{
+				mst.addVertex(rp.vname);
+				mst.addEdge(rp.vname, rp.acqvname, rp.cost);
+			}
+			
+			//nbrs
+			for(String nbr : vtces.get(rp.vname).nbrs.keySet()){
+				if(map.containsKey(nbr)){
+					int oc = map.get(nbr).cost;
+					int nc = vtces.get(rp.vname).nbrs.get(nbr);
+					if(nc < oc){
+						PrimsPair gp = map.get(nbr);
+						gp.acqvname = rp.vname;
+						gp.cost = nc;
+						heap.updatePriority(gp);
+					}
+				}
+			}
+			
+		}
+		return mst;
+	}
 	
+	private class DijkstraPair implements Comparable<DijkstraPair>{
+		String vname;
+		String psf;
+		int cost;
+		
+		@Override
+		public int compareTo(DijkstraPair o) {
+			// TODO Auto-generated method stub
+			return o.cost - this.cost;
+		}
+		
+	}
+	public HashMap<String,Integer> dijkstra(String src){
+		HashMap<String, Integer> ans = new HashMap<>();
+		HashMap<String,DijkstraPair> map = new HashMap<>();
+		HeapGenerics<DijkstraPair> heap = new HeapGenerics<>();
+		
+		for(String key : vtces.keySet()){
+			DijkstraPair np = new DijkstraPair();
+			np.vname = key;
+			np.psf = "";
+			np.cost = Integer.MAX_VALUE;
+			
+			if(key.equals(src)){
+				np.cost = 0;
+				np.psf=key;
+			}
+			heap.add(np);
+			map.put(key,np);
+		}
+			while(!heap.isEmpty()){
+				
+				DijkstraPair rp = heap.remove();
+				map.remove(rp.vname);
+				
+				ans.put(rp.vname,rp.cost);
+				
+				for(String nbr : vtces.get(rp.vname).nbrs.keySet()){
+					if(map.containsKey(nbr)){
+						int oc = map.get(nbr).cost;
+						int nc = rp.cost + vtces.get(rp.vname).nbrs.get(nbr);
+						
+						if(nc < oc){
+							DijkstraPair gp = map.get(nbr);
+							gp.psf = rp.psf+nbr;
+							gp.cost = nc;
+							heap.updatePriority(gp);
+						}
+					}
+				}
+				}
+			return ans;	
+		
+	}
 	}
 	
 

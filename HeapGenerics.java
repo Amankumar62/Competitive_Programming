@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HeapGenerics<T extends Comparable<T>> {
 
 	ArrayList<T> heap = new ArrayList<>();
+	HashMap<T,Integer> map = new HashMap<>();
 	
 	public void add(T item){
 		heap.add(item);
+		map.put(item, heap.size()-1);
 		heapify(heap.size() -1);
 	}
 	
@@ -21,6 +24,7 @@ public class HeapGenerics<T extends Comparable<T>> {
 	public T remove(){
 		swap(0,this.heap.size() -1);
 		T rv = this.heap.remove(this.heap.size() -1);
+		map.remove(rv);
 		downHeapify(0);
 		return rv;
 		}
@@ -53,6 +57,8 @@ public class HeapGenerics<T extends Comparable<T>> {
 		
 		heap.set(pi, civ);
 		heap.set(ci, piv);
+		map.put(civ, pi);
+		map.put(piv, ci);
 	}
 	
 	public int size(){
@@ -69,4 +75,9 @@ public class HeapGenerics<T extends Comparable<T>> {
 		return t.compareTo(o);
 	}
 	
+	public void updatePriority(T pair){
+		int index = map.get(pair);
+		heapify(index);
+	
+	}
 }
